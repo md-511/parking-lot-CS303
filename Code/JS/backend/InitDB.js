@@ -8,6 +8,31 @@ const Database = new SQL.Database("Database/Main.db", (err) => {
     }  
 });
 
+function AddParkingSlots(numberOfSlots = 9) {
+    const query = `INSERT INTO ParkingLot DEFAULT VALUES`;
+    let insertCount = 0;
+    let errorsOccurred = false;
+
+    for (let i = 0; i < numberOfSlots; ++i) {
+        Database.run(query, (err) => {
+            insertCount++;
+
+            if (err) {
+                console.error(`Failed to insert parking slot ${i + 1}:`, err.message);
+                errorsOccurred = true;
+            }
+
+            if (insertCount === numberOfSlots) {
+                if (!errorsOccurred) {
+                    console.log(`${numberOfSlots} parking slots inserted successfully!`);
+                } else {
+                    console.log("Some errors occurred during the insertions.");
+                }
+            }
+        });
+    }
+}
+
 Database.serialize(() => {
     Database.run(
         `CREATE TABLE IF NOT EXISTS Users (
@@ -18,31 +43,50 @@ Database.serialize(() => {
         );`
     , (err) => {
         if (err) {
-            console.error("Users Table creation failed!");
+            console.error("Users Table creation failed!", err.message);
         } else {
             console.log("Users Table created successfully!");
         }
-    })
+    });
 
     Database.run(
-        `CREATE TABLE ParkingLot (
+        `CREATE TABLE IF NOT EXISTS ParkingLot (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            occupied BOOLEAN NOT NULL DEFAULT 0
+            occupant INTEGER NOT NULL DEFAULT -1,
+            FOREIGN KEY(occupant) REFERENCES Users(id) ON DELETE SET DEFAULT
         );`
     , (err) => {
         if (err) {
-            console.error("Parking Lot Table creation failed!");
+            console.error("Parking Lot Table creation failed!", err.message);
         } else {
             console.log("Parking Lot Table created successfully!");
+            AddParkingSlots();
         }
     });
 
+    Database.run(
+        `CREATE TABLE IF NOT EXISTS Reviews (
+            userId INTEGER NOT NULL,
+            review TEXT NOT NULL,
+            FOREIGN KEY(userId) REFERENCES Users(id)
+        );`
+        , (err) => {
+            if (err) {
+                console.error("Reviews Table creation failed!", err.message);
+            } else {
+                console.log("Reviews Table created successfully!");
+            }
+    });
+
+
 });
 
-Database.close((err) => {
-    if (err) {
-        console.error("Error Closing the Database! (InitDB.js)");
-    } else {
-        console.log("Closed the Database successfully! (InitDB.js)");
-    }
-});
+setTimeout(() => {
+    Database.close((err) => {
+        if (err) {
+            console.error("Error Closing the Database! (InitDB.js)", err.message);
+        } else {
+            console.log("Closed the Database successfully! (InitDB.js)");
+        }
+    });
+}, 1000);

@@ -32,14 +32,14 @@ function CheckUser(email, password) {
             [email],
             (err, row) => {
                 if (err) {
-                    reject(new Error("Users lookup failed!"));
+                    reject(new Error("Users lookup failed! (DatabaseUtils.js)"));
                 } else if (!row) {
-                    reject(new Error("No User with provided credentials found!"));
+                    reject(new Error("No User with provided credentials found! (DatabaseUtils.js)"));
                 } else {
                     if (row.password == password) {
                         resolve("Logged In Successfully!");
                     } else {
-                        reject(new Error("Incorrect Password!"));
+                        reject(new Error("Incorrect Password! (DatabaseUtils.js)"));
                     }
                 }
             }
@@ -47,8 +47,58 @@ function CheckUser(email, password) {
     });
 }
 
-function BookParking(id) {
+function BookParking(parkingId, userId) {
+    // console.log(parkingId, userId);
+    return new Promise((resolve, reject) => {
+        Database.get(
+            `SELECT * FROM ParkingLot WHERE id = ?`,
+            [parkingId],
+            (err, row) => {
+                if (err) {
+                    reject(new Error("Error, Booking (DatabaseUtils.js)"));
+                } else if (!row) {
+                    reject(new Error("Error, ParkingID is invalid! (DatabaseUtils.js)"));
+                } else {
+                    if (row.occupant == -1) {
+                        Database.run(
+                            `UPDATE ParkingLot SET occupant = ? WHERE id = ?`,
+                            [userId, parkingId],
+                            (err) => {
+                                if (err) {
+                                    reject(new Error("Error updating parking slot occupant (DatabaseUtils.js)"));
+                                } else if (this.changes == 0) {
+                                    reject(new Error("Error, Parking slot was not updated (DatabaseUtils.js)"));
+                                } else {
+                                    resolve("Parking slot booked successfully.");
+                                }
+                            }
+                        );
+                    } else {
+                        reject(new Error("Error, Parking already Booked (DatabaseUtils.js)"));
+                    }
+                }
+        });
+    });
+}
+
+function AddReview(id, message) {
     // TODO
 }
 
-module.exports = {CreateUser, CheckUser, BookParking};
+function FetchParkingSlots() {
+    return new Promise((resolve, reject) => {
+        Database.all(
+            `SELECT * FROM ParkingLot`,
+            [],
+            (err, rows) => {
+                if (err) {
+                    reject(new Error("Error, Fetching ParkingLot (DatabaseUtils.js)"));
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+}
+
+module.exports = { CreateUser, CheckUser, BookParking, AddReview, FetchParkingSlots };

@@ -4,9 +4,9 @@ const eEmail = document.getElementById("email");
 const ePassword = document.getElementById("password");
 const eButton = document.getElementById("submit");
 
-console.log(eButton);
-console.log(eEmail);
-console.log(ePassword);
+// console.log(eButton);
+// console.log(eEmail);
+// console.log(ePassword);
 
 eButton.addEventListener("click", async (event) => {
     // Prevent form submission which will now be handled by JS
