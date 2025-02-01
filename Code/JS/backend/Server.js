@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { CreateUser, CheckUser, BookParking, AddReview, FetchParkingSlots } = require("./DatabaseUtils.js");
+const { CreateUser, CheckUser, BookParking, AddReview, FetchParkingSlots, FetchBookings } = require("./DatabaseUtils.js");
 const { ValidateToken } = require("./AuthUtils.js");
 
 const homePageURL = "http://localhost:5500/Code/Html/Index.html";
@@ -69,6 +69,16 @@ app.post("/api/booking", async (req, res) => {
         // } else {
         //     res.status(400).json({ success: false, message: "Selected Parking is already Booked!" });
         // }
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+app.get("/api/fetchBookings", async (req, res) => {
+    const userId = req.query.userId;
+    try {
+        const message = await FetchBookings(userId);
+        res.status(200).json({ success: true, message: message });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
     }

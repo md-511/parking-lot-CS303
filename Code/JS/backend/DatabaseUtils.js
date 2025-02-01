@@ -115,4 +115,20 @@ function FetchParkingSlots() {
     });
 }
 
-module.exports = { CreateUser, CheckUser, BookParking, AddReview, FetchParkingSlots };
+function FetchBookings(userId) {
+    return new Promise((resolve, reject) => {
+        Database.all(
+            `SELECT * FROM ParkingLot WHERE occupant = ?`,
+            [userId],
+            (err, rows) => {
+                if (err) {
+                    reject(new Error("Error, Fetching Bookings (DatabaseUtils.js)"));
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+}
+
+module.exports = { CreateUser, CheckUser, BookParking, AddReview, FetchParkingSlots, FetchBookings };

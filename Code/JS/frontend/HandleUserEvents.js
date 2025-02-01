@@ -1,14 +1,11 @@
 const eContainer = document.querySelector(".container");
+const bookings = document.getElementById("bookings");
 
 window.onload = async () => {
     await FetchParkingData();
     // await checkIfLoggedIn();
     UpdateStyles();
 };
-
-async function checkIfLoggedIn() {
-    
-}
 
 async function FetchParkingData() {
     try {
@@ -30,10 +27,11 @@ function UpdateStyles() {
     for (let slot of slots) {
         if (slot.dataset.status != -1) {
             // occupied
-            slot.style.backgroundColor = "#D32F2F";
+            // slot.style.backgroundColor = "#D32F2F";
+            slot.style.backgroundColor = "#dfacff";
         } else {
             // vacant
-            slot.style.backgroundColor = "#388E3C";
+            // slot.style.backgroundColor = "#388E3C";
         }
     }
 }
@@ -70,10 +68,6 @@ async function ValidateSession() {
 }
 
 async function BookSlot(parkingId, userId) {
-    // let session = await ValidateSession();
-    // if (!session) {
-    //     return;
-    // }
     try {
         const response = await fetch("http://localhost:8080/api/booking", {
             method: "POST",
@@ -121,3 +115,10 @@ function populateParkingList(slots) {
         eContainer.appendChild(eSlot);
     }
 }
+
+bookings.addEventListener("click", async (event) => {
+    const session = await ValidateSession();
+    if (!session) {
+        event.preventDefault();
+    }
+});
