@@ -27,8 +27,10 @@ eButton.addEventListener("click", async (event) => {
         const result = await response.json();
 
         if (result.success) {
+            localStorage.setItem("authToken", result.token);
+            localStorage.setItem("userId", result.message.userId);
             window.location.href = result.redirectTo;
-            alert(result.message);
+            alert(result.message.text);
         } else {
             alert(result.message);
         }

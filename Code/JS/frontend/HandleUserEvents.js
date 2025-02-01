@@ -2,8 +2,13 @@ const eContainer = document.querySelector(".container");
 
 window.onload = async () => {
     await FetchParkingData();
+    // await checkIfLoggedIn();
     UpdateStyles();
 };
+
+async function checkIfLoggedIn() {
+    
+}
 
 async function FetchParkingData() {
     try {
@@ -33,15 +38,42 @@ function UpdateStyles() {
     }
 }
 
-function ValidateSession() {
-    // TODO
-    return true;
+async function ValidateSession() {
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+        // console.log("User is not logged in");
+        alert("You Must LogIn or SignUp!");
+        return false;
+    }
+
+    try {
+        const response = await fetch("http://localhost:8080/api/protected", {
+            method: "GET",
+            headers: {
+                "Authorization": token,
+            },
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            console.log("User is logged in:", result.user);
+            return true;
+        } else {
+            console.log("Invalid token:", result.message);
+            return false;
+        }
+    } catch (error) {
+        console.error("Error checking login state:", error);
+        return false;
+    }
 }
 
 async function BookSlot(parkingId, userId) {
-    if (!ValidateSession) {
-        return;
-    }
+    // let session = await ValidateSession();
+    // if (!session) {
+    //     return;
+    // }
     try {
         const response = await fetch("http://localhost:8080/api/booking", {
             method: "POST",
@@ -78,8 +110,12 @@ function populateParkingList(slots) {
         eSlot.dataset.status = slot.occupant;
         eSlot.textContent = `Slot: ${slot.id}`;
 
-        eSlot.addEventListener("click", () => {
-            BookSlot(eSlot.dataset.id, 1);
+        eSlot.addEventListener("click", async () => {
+            let session = await ValidateSession();
+            if (!session) {
+                return;
+            }
+            BookSlot(eSlot.dataset.id, localStorage.getItem("userId"));
         });
 
         eContainer.appendChild(eSlot);

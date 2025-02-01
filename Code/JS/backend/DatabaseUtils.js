@@ -14,11 +14,12 @@ function CreateUser(username, email, password) {
         Database.run(
             `INSERT INTO Users (username, email, password) VALUES (?, ?, ?)`,
             [username, email, password],
-            (err) => {
+            // Use regular function because => doesnt have access to "this"
+            function (err) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve("User Created Successfully!");
+                    resolve({ text: "User Created Successfully!", userId: this.lastID });
                 }
             }
         );
@@ -37,7 +38,7 @@ function CheckUser(email, password) {
                     reject(new Error("No User with provided credentials found! (DatabaseUtils.js)"));
                 } else {
                     if (row.password == password) {
-                        resolve("Logged In Successfully!");
+                        resolve({ text: "Logged In Successfully!", userId: row.id });
                     } else {
                         reject(new Error("Incorrect Password! (DatabaseUtils.js)"));
                     }
@@ -81,8 +82,21 @@ function BookParking(parkingId, userId) {
     });
 }
 
-function AddReview(id, message) {
-    // TODO
+// ! SUS
+function AddReview(userId, review) {
+    return new Promise((resolve, reject) => {
+        Database.run(
+            `INSERT INTO Reviews (user_id, review) VALUES (?, ?)`, 
+            [userId, review],
+            (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve("Review Added Successfully!");
+                }
+            }
+        );
+    });
 }
 
 function FetchParkingSlots() {
