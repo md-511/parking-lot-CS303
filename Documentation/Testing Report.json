@@ -1,0 +1,176 @@
+{
+	"id": "c6a87174-51ce-48c1-9892-c29c158b7a63",
+	"name": "PakingLot_API_endpoints",
+	"timestamp": "2025-02-04T17:30:02.344Z",
+	"collection_id": "41793798-21b6f1a6-3f70-45fe-8c50-9045209a2e11",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-02-04T17:30:01.679Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "c4000cb5-346f-452b-be97-0784fe41338c",
+			"name": "http://localhost:8080/api/protected",
+			"url": "http://localhost:8080/api/protected",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				4
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "d4200e1c-2045-4b38-b2de-08a9f9d6ab5c",
+			"name": "http://localhost:8080/api/review",
+			"url": "http://localhost:8080/api/review",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				11
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "24dc1709-e41e-4aba-9c07-7c1a2b9f44cb",
+			"name": "http://localhost:8080/api/signin",
+			"url": "http://localhost:8080/api/signin",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				5
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "f7a4ede8-aa50-42ab-be56-83d3a6367179",
+			"name": "http://localhost:8080/api/booking",
+			"url": "http://localhost:8080/api/booking",
+			"time": 10,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				10
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "18b69a1f-cab8-413e-9bf9-9619647fc5e2",
+			"name": "http://localhost:8080/api/parkingSlots",
+			"url": "http://localhost:8080/api/parkingSlots",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				3
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "a82efe1e-53d2-4086-8a60-17b422aa0c69",
+			"name": "http://localhost:8080/api/signup",
+			"url": "http://localhost:8080/api/signup",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				11
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "fa8920a5-0b9a-4423-86aa-c76e770bfa5f",
+			"name": "http://localhost:8080/api/fetchBookings?userId=1",
+			"url": "http://localhost:8080/api/fetchBookings?userId=1",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				2
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 46,
+	"collection": {
+		"requests": [
+			{
+				"id": "c4000cb5-346f-452b-be97-0784fe41338c",
+				"method": "GET"
+			},
+			{
+				"id": "d4200e1c-2045-4b38-b2de-08a9f9d6ab5c",
+				"method": "POST"
+			},
+			{
+				"id": "24dc1709-e41e-4aba-9c07-7c1a2b9f44cb",
+				"method": "POST"
+			},
+			{
+				"id": "f7a4ede8-aa50-42ab-be56-83d3a6367179",
+				"method": "POST"
+			},
+			{
+				"id": "18b69a1f-cab8-413e-9bf9-9619647fc5e2",
+				"method": "GET"
+			},
+			{
+				"id": "a82efe1e-53d2-4086-8a60-17b422aa0c69",
+				"method": "POST"
+			},
+			{
+				"id": "fa8920a5-0b9a-4423-86aa-c76e770bfa5f",
+				"method": "GET"
+			}
+		]
+	}
+}

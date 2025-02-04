@@ -86,7 +86,7 @@ function BookParking(parkingId, userId) {
 function AddReview(userId, review) {
     return new Promise((resolve, reject) => {
         Database.run(
-            `INSERT INTO Reviews (user_id, review) VALUES (?, ?)`, 
+            `INSERT INTO Reviews (userId, review) VALUES (?, ?)`, 
             [userId, review],
             (err) => {
                 if (err) {

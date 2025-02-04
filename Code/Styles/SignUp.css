@@ -10,7 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
+    background-color: #7D8CA3;
 }
 
 .container {
@@ -55,7 +55,7 @@ input:focus {
 
 button {
     padding: 10px;
-    background: #6a11cb;
+    background: #58355E;
     color: white;
     border: none;
     border-radius: 5px;
@@ -65,7 +65,7 @@ button {
 }
 
 button:hover {
-    background: #2575fc;
+    background: #6f5174;
 }
 
 .link {
@@ -74,12 +74,12 @@ button:hover {
 }
 
 .link a {
-    color: #6a11cb;
+    color: #58355E;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
 }
 
 .link a:hover {
-    color: #2575fc;
+    color: #6f5174;
 }
